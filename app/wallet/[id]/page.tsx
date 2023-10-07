@@ -3,13 +3,14 @@ import { Transaction, columns } from "./columns"
 import { DataTable } from "./data-table"
 import { getServerSession } from "next-auth"
 import UnauthenticatedLanding from '@/app/landing'
+import { redirect } from 'next/navigation'
 
 export default async function WalletDetail() {
 
   const session = await getServerSession()
 
   if (!session) {
-    return <UnauthenticatedLanding />
+    return redirect('/')
   }
 
   const data = transactionSample

@@ -1,18 +1,5 @@
 import mongoose from "mongoose"
 
-;`### Wallets
-
-- id: int
-- user_id: int
-- name: string
-- initial_balance: float
-- current_balance: float
-- currency: string
-- created_at: datetime
-- updated_at: datetime
-- is_deleted: boolean
-- deleted_at: datetime`
-
 export interface WalletDocument extends mongoose.Document {
   user_id: mongoose.Schema.Types.ObjectId | null
   name: string

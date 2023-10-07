@@ -1,3 +1,5 @@
+'use server'
+
 import wallets from "@/models/wallets"
 
 import dbConnect from "./dbConnect"

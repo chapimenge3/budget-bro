@@ -1,3 +1,5 @@
+'use server'
+
 import transactions from "@/models/transactions"
 
 import dbConnect from "./dbConnect"

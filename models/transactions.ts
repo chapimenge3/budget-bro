@@ -1,20 +1,5 @@
 import mongoose from "mongoose"
 
-;`- id: int
-- user_id: int
-- wallet_id: int
-- category_id: int [ => Foreign Key to Categories Table]
-- date: datetime
-- note: string (255) (nullable)
-- amount: float
-- type: string (enum: income, expense and transfer)
-- label_id: int (nullable) [ => Foreign Key to Labels Table]
-- created_at: datetime
-- updated_at: datetime
-- is_deleted: boolean
-- deleted_at: datetime
-`
-
 export interface TransactionDocument extends mongoose.Document {
   user_id: mongoose.Schema.Types.ObjectId
   wallet_id: mongoose.Schema.Types.ObjectId

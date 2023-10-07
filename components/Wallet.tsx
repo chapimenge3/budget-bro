@@ -23,7 +23,7 @@ export default function Wallet({ id, name, amount, currency }: WalletProps) {
             </CardHeader>
             <CardContent>
                 <div className="text-2xl font-bold">
-                    {amount} {currency}
+                    {Intl.NumberFormat('en-US', { style: 'currency', currency: currency }).format(amount)}
                 </div>
                 {/* <p className="text-xs text-muted-foreground">
                     +20.1% from last month
