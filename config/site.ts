@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
-  name: "Next.js",
+  name: "Budget Bro",
   description:
-    "Beautifully designed components built with Radix UI and Tailwind CSS.",
+    "Budget Bro is a simple budgeting app that helps you track your spending and save money.",
   mainNav: [
     {
       title: "Home",
@@ -11,8 +11,8 @@ export const siteConfig = {
     },
   ],
   links: {
-    twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/shadcn/ui",
-    docs: "https://ui.shadcn.com",
+    website: "https://chapimenge.com",
+    github: "https://github.com/chapimenge3",
+    linkedin: "https://www.linkedin.com/in/chapimenge"
   },
 }
