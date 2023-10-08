@@ -3,9 +3,8 @@ import mongoose from "mongoose"
 export interface TransactionDocument extends mongoose.Document {
   user_id: mongoose.Schema.Types.ObjectId
   wallet_id: mongoose.Schema.Types.ObjectId
-  category_id: mongoose.Schema.Types.ObjectId
+  category_id: mongoose.Schema.Types.ObjectId | null
   label_id: mongoose.Schema.Types.ObjectId | null
-  date: Date
   note: string
   amount: number
   type: string
@@ -29,13 +28,11 @@ const TransactionSchema = new mongoose.Schema<TransactionDocument>({
   category_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Category",
-    required: [true, "Please provide a category"],
   },
   label_id: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Label",
   },
-  date: { type: Date, required: true },
   note: { type: String },
   amount: { type: Number, required: true },
   type: {

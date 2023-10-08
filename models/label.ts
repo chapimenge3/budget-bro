@@ -17,3 +17,4 @@ const LabelSchema = new mongoose.Schema<LabelDocument>({
   },
 })
 
+export default mongoose.models.Label || mongoose.model<LabelDocument>("Label", LabelSchema)
