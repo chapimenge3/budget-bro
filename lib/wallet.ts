@@ -152,6 +152,7 @@ export async function deleteWallet(wallet_id: string) {
     }
     await deleteWalletTransaction(wallet_id)
     const wallet = await wallets.findByIdAndDelete(wallet_id)
+    revalidatePath("/dashboard")
     return wallet
   } catch (error) {
     console.error(error)
