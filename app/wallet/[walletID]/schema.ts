@@ -5,7 +5,7 @@ export const TransactionListSchema = z.object({
   type: z.string(),
   amount: z.number(),
   note: z.string(),
-  date: z.string(),
+  date: z.date(),
 })
 
 export type TransactionList = z.infer<typeof TransactionListSchema>

@@ -1,27 +1,20 @@
 "use client"
-
 import { ColumnDef } from "@tanstack/react-table"
-import { ArrowUpDown, MoreHorizontal } from "lucide-react"
+import { ArrowUpDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import ColumnAction from './columnAction'
 
-export type Transaction = {
+export type TransactionType = {
     _id: string
     type: string
     note: string
-    date: string
+    date: Date
     amount: number
+    currency?: string
 }
 
-export const columns: ColumnDef<Transaction>[] = [
+export const columns: ColumnDef<TransactionType>[] = [
     {
         id: "select",
         header: ({ table }) => (
@@ -78,9 +71,16 @@ export const columns: ColumnDef<Transaction>[] = [
             const amount = parseFloat(row.getValue("amount"))
             const formatted = new Intl.NumberFormat("en-US", {
                 style: "currency",
-                currency: "USD",
+                currency: row.original.currency ?? "USD",
             }).format(amount)
-            return <div className="text-center">{formatted}</div>
+
+            const textColor = row.original.type === "expense" ? "text-red-500" : "text-green-500"
+            return (
+                <div className={textColor + " text-center"}>
+                    {row.original.type === "expense" ? "-" : "+"}
+                    {formatted}
+                </div>
+            )
         }
     },
     {
@@ -99,33 +99,11 @@ export const columns: ColumnDef<Transaction>[] = [
             catch (err) {
                 return <div className="text-left">Invalid date</div>
             }
-        }
+        },
+        enableSorting: true,
     },
     {
         id: "actions",
-        cell: ({ row }) => {
-            const transaction = row.original
-            return (
-                <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                            <span className="sr-only">Open menu</span>
-                            <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent align="end">
-                        <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                        <DropdownMenuItem
-                            onClick={() => navigator.clipboard.writeText(transaction._id)}
-                        >
-                            Copy payment ID
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem>View customer</DropdownMenuItem>
-                        <DropdownMenuItem>View payment details</DropdownMenuItem>
-                    </DropdownMenuContent>
-                </DropdownMenu>
-            )
-        }
+        cell: ({ row }) => <ColumnAction row={row} />
     }
 ]

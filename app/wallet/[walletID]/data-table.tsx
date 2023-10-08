@@ -22,15 +22,39 @@ import {
 } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
+import AddTransaction from "@/components/AddTransaction"
+
+interface WalletChoiceProps {
+    _id: string,
+    name: string
+}
+
+interface CategoryChoiceProps {
+    _id: string,
+    name: string,
+    color: string
+    icon: string
+}
+
+interface LabelChoiceProps {
+    _id: string,
+    name: string,
+}
 
 interface DataTableProps<TData, TValue> {
     columns: ColumnDef<TData, TValue>[]
     data: TData[]
+    walletChoice?: WalletChoiceProps[]
+    categoryChoice?: CategoryChoiceProps[]
+    labelChoice?: LabelChoiceProps[]
 }
 
 export function DataTable<TData, TValue>({
     columns,
     data,
+    walletChoice,
+    categoryChoice,
+    labelChoice
 }: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([])
     const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
@@ -65,15 +89,7 @@ export function DataTable<TData, TValue>({
                     }
                     className="max-w-sm"
                 />
-                {/* add transaction button */}
-                <Button
-                    variant="outline"
-                    size="sm"
-                    className="ml-auto"
-                    onClick={() => console.log("add transaction")}
-                >
-                    Add Transaction
-                </Button>
+                <AddTransaction wallets={walletChoice} categories={categoryChoice} labels={labelChoice} />
 
             </div>
             <div className="rounded-md border">
