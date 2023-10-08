@@ -1,19 +1,39 @@
-'use server'
+"use server"
 
 import Category from "@/models/category"
+import user from "@/models/user"
+import { getServerSession } from "next-auth"
 
 import dbConnect from "./dbConnect"
 
+const getAuthUser = async () => {
+  const session = await getServerSession()
+  if (!session) {
+    return null
+  }
+  await dbConnect()
+  const current_user = await user.findOne({ email: session.user?.email })
+  if (!current_user) {
+    return null
+  }
+  return current_user
+}
+
 export async function createCategory(
-  user_id: string | null,
   name: string,
   color: string | null,
   icon: string | null
 ) {
   try {
-    await dbConnect()
+    const current_user = await getAuthUser()
+    if (!current_user) {
+      return {
+        status: "error",
+        message: "User not found",
+      }
+    }
     const category = await Category.create({
-      user_id,
+      user_id: current_user._id.toString(),
       name,
       color,
       icon,
@@ -25,13 +45,21 @@ export async function createCategory(
   }
 }
 
-export async function getCategories(user_id: string) {
+export async function getCategories() {
   try {
-    await dbConnect()
+    const current_user = await getAuthUser()
+    if (!current_user) {
+      return null
+    }
     const userCategories = await Category.find({
-      $or: [{ user_id }, { user_id: null }],
+      $or: [{ user_id: current_user._id }, { user_id: null }],
     })
-    return userCategories
+    return userCategories.map((category) => ({
+      _id: category._id.toString(),
+      name: category.name,
+      color: category.color,
+      icon: category.icon,
+    }))
   } catch (error) {
     console.error(error)
     return null
