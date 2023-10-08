@@ -1,14 +1,11 @@
-'use client'
-
+// 'use client'
 import { redirect } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { signIn, useSession } from "next-auth/react"
+import MySignInButton from "@/components/mySignInButton"
+import { getServerSession } from "next-auth"
 
-export default function IndexPage() {
+export default async function IndexPage() {
 
-  const { data: session, status } = useSession()
-  console.log(session, status)
-
+  const session = await getServerSession()
   if (session) {
     return redirect('/dashboard')
   }
@@ -47,12 +44,9 @@ export default function IndexPage() {
               spending habits. It is easy to use and free.
             </p>
             <div className="mt-10 flex items-center justify-center gap-x-6">
-              <Button
-                onClick={() => signIn()}
-                className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Get started
-              </Button>
+              <div>
+                <MySignInButton />
+              </div>
               <a href="#" className="text-sm font-semibold leading-6">
                 Learn more <span aria-hidden="true">→</span>
               </a>
