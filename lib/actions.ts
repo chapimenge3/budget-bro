@@ -27,7 +27,10 @@ export async function getWallets() {
     return null
   }
   const user_wallets = await wallets.find({ user_id: current_user._id })
-  return user_wallets
+  return user_wallets.map((wallet) => {
+    wallet._id = wallet._id.toString()
+    return wallet
+  })
 }
 
 export async function getWallet(id: string) {
@@ -66,9 +69,7 @@ export async function createWallet(
       data: new_wallet,
     }
   } catch (error) {
-    console.log("Error creating wallet: ", typeof error)
     if (error instanceof MongooseError.ValidationError) {
-      console.log("Error is a validation error")
       const validationErrors = Object.values(error.errors).map(
         (mongooseError: any) => mongooseError.message
       )
