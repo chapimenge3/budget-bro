@@ -20,7 +20,6 @@ const WalletSchema = new mongoose.Schema<WalletDocument>({
   name: {
     type: String,
     required: [true, "Please provide a name"],
-    unique: true,
   },
   initial_balance: { type: Number, required: true },
   current_balance: { type: Number, required: true },
