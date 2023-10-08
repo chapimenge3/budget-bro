@@ -23,7 +23,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { zodResolver } from "@hookform/resolvers/zod"
 import * as z from "zod"
 import { useForm } from "react-hook-form"
-import { createWallet } from "@/lib/actions"
+import { createWallet } from "@/lib/wallet"
 import { useState } from "react"
 
 const formSchema = z.object({
@@ -41,9 +41,7 @@ export default function AddWallet() {
     })
 
     async function onSubmit(data: z.infer<typeof formSchema>) {
-        console.log('Data', data)
         const newWallet = await createWallet(data.name, data.balance, data.currency)
-        console.log(newWallet)
         if (newWallet === null || newWallet.status === 'error') {
             return toast({
                 description: newWallet?.message || "Something went wrong",
@@ -61,7 +59,6 @@ export default function AddWallet() {
             <Toaster />
             <DialogTrigger asChild>
                 <Button className="mt-4" onClick={() => {
-                    console.log('open', open)
                     setOpen(true)
                 }}>
                     Add Wallet
