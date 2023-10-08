@@ -15,6 +15,7 @@ export default async function AuthenticatedLanding() {
     return <div>Not Authenticated</div>
   }
   const walletData: WalletDocument[] | null = await getWallets()
+  console.log('walletData', walletData)
   const combinedTransaction = await combinedTransactionPerDay(null)
   return (
     <section className="container grid items-center gap-6 pb-8 pt-6 md:py-10">
@@ -30,11 +31,28 @@ export default async function AuthenticatedLanding() {
             showButton={true}
           />
         ))}
+        {
+          !walletData || walletData.length == 0 &&
+          <div className="col-span-full">
+            <h2 className="text-center text-2xl font-bold">No Wallets Found</h2>
+            <p className="text-center text-gray-500">Please create a wallet</p>
+          </div>
+        }
       </div>
       <div className="">
         <AddWallet />
       </div>
-      <Transaction data={combinedTransaction || []} />
+      {
+        combinedTransaction && combinedTransaction.length > 0 &&
+        <Transaction data={combinedTransaction || []} />
+      }
+      {
+        !combinedTransaction || combinedTransaction.length == 0 &&
+        <div className="col-span-full">
+          <h2 className="text-center text-2xl font-bold">No Transactions Found</h2>
+          <p className="text-center text-gray-500">Please add a transaction</p>
+        </div>
+      }
     </section>
   )
 }
