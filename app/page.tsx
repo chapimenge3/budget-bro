@@ -5,11 +5,6 @@ import { getServerSession } from "next-auth"
 
 export default async function IndexPage() {
 
-  const session = await getServerSession()
-  if (session) {
-    return redirect('/dashboard')
-  }
-
   return (
     <div>
       <div className="relative isolate px-6 pt-14 lg:px-8">

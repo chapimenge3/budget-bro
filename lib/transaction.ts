@@ -39,13 +39,14 @@ export async function createTransaction(
       }
     }
     const checkWallet = await checkWalletOwnership(wallet_id, current_user._id)
+    const amountToBePushed = type === "income" ? amount : -amount
     if (!checkWallet) {
       return {
         status: "error",
         message: "Wallet not found",
       }
     }
-    if (checkWallet?.current_balance < amount) {
+    if (checkWallet?.current_balance + amountToBePushed < 0) {
       return {
         status: "error",
         message: "Insufficient balance in wallet",
@@ -60,7 +61,6 @@ export async function createTransaction(
       amount,
       type,
     })
-    const amountToBePushed = type === "income" ? amount : -amount
     const walletCurrentBalance = checkWallet?.current_balance + amountToBePushed
     await updateWallet(
       checkWallet._id,

@@ -65,7 +65,7 @@ interface AddTransactionProps<TData, TValue> {
 }
 
 export default function AddTransaction<TData, TValue>({
-    wallets, categories, labels, 
+    wallets, categories, labels,
 }: AddTransactionProps<TData, TValue>) {
     const [open, setOpen] = useState(false);
     const { toast } = useToast();
@@ -100,7 +100,7 @@ export default function AddTransaction<TData, TValue>({
         );
         if (newTransaction === null || newTransaction.status === 'error') {
             toast({
-                title: 'uh oh! Something went wrong',
+                title: 'uh oh! Error',
                 description: newTransaction?.message || 'Something went wrong',
                 variant: 'destructive',
             });
@@ -110,14 +110,14 @@ export default function AddTransaction<TData, TValue>({
                 title: 'Transaction created successfully',
                 description: newTransaction?.message || 'Transaction created successfully',
             });
+            transactionForm.reset();
         }
         // reset the form
-        transactionForm.reset();
+
     }
 
     return (
         <Dialog open={open} onOpenChange={setOpen}>
-            <Toaster />
             <DialogTrigger asChild>
                 <Button className="ml-auto mt-4" onClick={() => setOpen(true)}>
                     Add Transaction
@@ -125,6 +125,7 @@ export default function AddTransaction<TData, TValue>({
             </DialogTrigger>
             <DialogContent>
                 <DialogTitle>Create Transaction Form</DialogTitle>
+                <Toaster  />
                 <Form {...transactionForm}>
                     <form onSubmit={transactionForm.handleSubmit(onSubmit)} className="space-y-8">
                         <FormField

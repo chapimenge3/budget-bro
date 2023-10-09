@@ -71,6 +71,7 @@ export default function ColumnAction<TData>({
                     <AlertDialogFooter>
                         <AlertDialogCancel>Cancel</AlertDialogCancel>
                         <AlertDialogAction
+                            className="hover:bg-red-70 bg-red-600"
                             onClick={
                                 async () => {
 

@@ -15,8 +15,9 @@ import {
     DropdownMenuShortcut,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-
+import { ArrowLeftOnRectangleIcon } from "@heroicons/react/20/solid"
 import { signIn, signOut, useSession } from "next-auth/react"
+import { useEffect } from "react"
 
 
 export function UserNav() {
@@ -54,17 +55,7 @@ export function UserNav() {
                 <DropdownMenuGroup>
                     <DropdownMenuItem>
                         Profile
-                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
                     </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        Billing
-                        <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        Settings
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>New Team</DropdownMenuItem>
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>
@@ -72,11 +63,13 @@ export function UserNav() {
                     <Button
                         variant="ghost"
                         className="w-full text-left"
-                        onClick={() => signOut()}
+                        onClick={() => signOut({ callbackUrl: '/' })}
                     >
                         Log out
                     </Button>
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+                    <DropdownMenuShortcut>
+                        <ArrowLeftOnRectangleIcon className="h-5 w-5" />
+                    </DropdownMenuShortcut>
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

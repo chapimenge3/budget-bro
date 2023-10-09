@@ -52,6 +52,9 @@ export const columns: ColumnDef<TransactionType>[] = [
     {
         accessorKey: "note",
         header: "Note",
+        cell: ({ row }) => {
+            return <div className="text-left">{row.getValue("note") || "-"}</div>
+        }
     },
     {
         accessorKey: "amount",

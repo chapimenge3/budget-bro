@@ -76,7 +76,6 @@ export async function createWallet(
     return {
       status: "success",
       message: "Wallet created successfully",
-      data: new_wallet,
     }
   } catch (error) {
     if (error instanceof MongooseError.ValidationError) {

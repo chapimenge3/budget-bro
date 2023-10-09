@@ -80,6 +80,7 @@ export function DataTable<TData, TValue>({
 
     return (
         <div>
+            {/* make them row to stack up on mobile */}
             <div className="flex items-center py-4">
                 <Input
                     placeholder="Filter note..."
@@ -87,13 +88,13 @@ export function DataTable<TData, TValue>({
                     onChange={(event) =>
                         table.getColumn("note")?.setFilterValue(event.target.value)
                     }
-                    className="max-w-sm"
+                    className="w-full max-w-sm"
                 />
                 <AddTransaction wallets={walletChoice} categories={categoryChoice} labels={labelChoice} />
 
             </div>
             <div className="rounded-md border">
-                <Table>
+                <Table className="table-auto">
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (
                             <TableRow key={headerGroup.id}>
